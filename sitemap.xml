@@ -1,28 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-         <loc>https://qatoqat.com/</loc>
-         <lastmod>2022-06-29</lastmod>
-         <changefreq>daily</changefreq>
+        <loc>https://qatoqat.com/</loc>
     </url>
     <url>
-         <loc>https://qatoqat.com/about/</loc>
-         <lastmod>2022-06-29</lastmod>
-         <changefreq>daily</changefreq>
+        <loc>https://qatoqat.com/about/</loc>
     </url>
     <url>
-         <loc>https://qatoqat.com/commissions/</loc>
-         <lastmod>2022-06-29</lastmod>
-         <changefreq>daily</changefreq>
+        <loc>https://qatoqat.com/blog/</loc>
     </url>
     <url>
-         <loc>https://qatoqat.com/gallery/</loc>
-         <lastmod>2022-06-29</lastmod>
-         <changefreq>daily</changefreq>
+        <loc>https://qatoqat.com/blog/page/1/</loc>
     </url>
     <url>
-         <loc>https://qatoqat.com/links/</loc>
-         <lastmod>2022-06-29</lastmod>
-         <changefreq>daily</changefreq>
+        <loc>https://qatoqat.com/blog/test-post/</loc>
+        <lastmod>2024-02-24</lastmod>
+    </url>
+    <url>
+        <loc>https://qatoqat.com/projects/</loc>
+        <lastmod>2024-04-24</lastmod>
+    </url>
+    <url>
+        <loc>https://qatoqat.com/tags/</loc>
     </url>
 </urlset>
