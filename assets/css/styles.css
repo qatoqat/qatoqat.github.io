@@ -3,8 +3,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    transition: background-color .5s ease, color .1s ease, filter .1s ease;
-;
+    transition: background-color .5s ease, color .1s ease, filter .1s ease;;
 }
 
 :root {
@@ -198,9 +197,13 @@ footer {
     }
 
     span {
+        color: #fff;
         bottom: 1em;
         left: 1em;
         position: absolute;
+        padding: .125em .25em;
+        border-radius: .25em;
+        background-color: #00000022;
     }
 }
 
@@ -241,6 +244,8 @@ footer {
         gap: 1em;
 
         .item {
+            user-select: none;
+            text-decoration: none;
             border-radius: .25em;
             padding: .5em;
             display: flex;
@@ -273,6 +278,15 @@ footer {
 
                 span {
                     color: #fff;
+                    display: flex;
+                    align-items: center;
+                    i#indicator {
+                        border-radius: 100%;
+                        width: .75em;
+                        height: .75em;
+                        background-color: #40A258;
+                        margin-right: .5em;
+                    }
 
                     &#online-status {
                         font-size: .75em;
@@ -281,7 +295,8 @@ footer {
             }
 
             &.commission {
-                background-color: #0ca;
+                color: #fff;
+                background-color: #0b9;
                 gap: 0;
 
                 span {
