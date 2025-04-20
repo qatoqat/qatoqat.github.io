@@ -1,0 +1,6 @@
+@font-face {
+    font-family: 'Gamepixies';
+    src: url('../webfonts/gamepixies-250116.woff2') format('woff2'),
+    url('../webfonts/gamepixies-250116.ttf') format('truetype');
+    font-display: swap;
+}
