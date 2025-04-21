@@ -280,6 +280,7 @@ footer {
                     color: #fff;
                     display: flex;
                     align-items: center;
+
                     i#indicator {
                         border-radius: 100%;
                         width: .75em;
@@ -300,7 +301,7 @@ footer {
                 gap: 0;
 
                 span {
-                    &#status {
+                    &#commission-status {
                         font-size: 1.5em;
                         font-weight: bold;
                     }

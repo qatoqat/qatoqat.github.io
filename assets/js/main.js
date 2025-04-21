@@ -40,4 +40,6 @@ listen(d, 'DOMContentLoaded', async _ => {
     initColorScheme()
     let discord = await import('./discord.js');
     discord.updateOnlineCount()
+    let github = await import('./github.js');
+    github.getCommStatus()
 })
