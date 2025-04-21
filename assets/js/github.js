@@ -4,20 +4,19 @@ export function getCommStatus() {
         .then(data => {
             let descData = JSON.parse(data.description)
             if (descData?.commission) {
+                let url = descData.commission.url
                 let bgColor = descData.commission.bgColor
                 let status = descData.commission.status
                 let commDiv = document.getElementsByClassName("commission")?.[0]
-                if (commDiv && bgColor) {
-                    commDiv.style.backgroundColor = bgColor
-                }
-
                 let commStatus = document.getElementById("commission-status")
-                if (commStatus && status) {
+                if (commDiv && commStatus && url && bgColor && status) {
+                    commDiv.href = url
+                    commDiv.style.backgroundColor = bgColor
                     commStatus.innerText = status
+                } else {
+                    console.error('Error parsing commission data')
                 }
             }
         })
-        .catch(error => {
-            console.error('Error:', error)
-        })
+        .catch(error => console.error('Error:', error))
 }
