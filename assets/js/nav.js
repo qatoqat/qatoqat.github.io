@@ -20,6 +20,7 @@ function initColorScheme() {
     d.documentElement.setAttribute(attrName, preferredScheme)
 
     if (preferredScheme === dark) {
+        schemeIcon.classList.add(moonIcon)
     } else {
         schemeIcon.classList.add(sunIcon)
     }

@@ -1,9 +1,7 @@
-
 function loadPartials() {
     for (let p of document.querySelectorAll('a.partial')) {
-        let url = p.href;
+        let url = p.href
         if (url) {
-
             fetch(url).then(r => r.text().then(t => {
                 if (t.startsWith('<!--partial-->')) {
                     let parent = p.parentNode
@@ -14,7 +12,7 @@ function loadPartials() {
                         let src = s.src
                         if (src) {
                             console.log(src)
-                            let script = document.createElement('script');
+                            let script = document.createElement('script')
                             script.src = src
                             document.head.appendChild(script)
                             script.remove()
@@ -30,4 +28,4 @@ function loadPartials() {
 }
 
 loadPartials()
-document.getElementById('main').style.opacity = '1'
+setTimeout(_ => document.getElementById('main').removeAttribute('style'), 100)

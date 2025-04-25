@@ -1,0 +1,1 @@
+document.body.innerHTML = `<img id="body-bg" src="/assets/img/cloud.png" alt="cloud"><div id="main" style="opacity: 0"><a class="partial" href="/partials/nav.html"></a>${document.body.getElementsByTagName('noscript')[0].innerHTML}<a class="partial" href="/partials/footer.html"></a></div>`

@@ -1,4 +1,7 @@
 function getCommStatus() {
+    if (location.hostname === "localhost" || location.hostname === "127.0.0.1") {
+        return
+    }
     fetch('https://api.github.com/repos/qatoqat/qatoqat.github.io')
         .then(response => response.json())
         .then(data => {

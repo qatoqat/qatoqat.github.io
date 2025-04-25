@@ -10,7 +10,7 @@ function updateOnlineCount() {
         .then(data => {
             const onlineCount = data.approximate_presence_count;
 
-            document.getElementById('online-status').innerHTML = `<i id="indicator"></i> ` + onlineCount + ' online';
+            document.getElementById('online-status').innerHTML = `<i class="indicator green"></i> ` + onlineCount + ' online';
         })
         .catch(error => {
             console.error('Error fetching data:', error);

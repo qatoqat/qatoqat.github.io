@@ -19,55 +19,7 @@ last_modified = str(time.time())
 server_ref: socketserver.TCPServer | None = None
 
 # -- utils --
-hot_reload_script = """
-<script>
-console.log("Hot reload is enabled");
-
-let reloadInterval;
-let isPageVisible = true;
-let wasPaused = false;
-
-function startPolling() {
-  reloadInterval = setInterval(() => {
-    fetch("/__ping__")
-      .then(res => res.text())
-      .then(ts => {
-        if (window.__last_reload_ts && window.__last_reload_ts !== ts) {
-          location.reload();
-        }
-        window.__last_reload_ts = ts;
-      })
-      .catch(() => {});
-  }, 1000);
-}
-
-function stopPolling() {
-  if (reloadInterval) {
-    clearInterval(reloadInterval);
-    reloadInterval = null;
-  }
-}
-
-document.addEventListener('visibilitychange', () => {
-  if (document.visibilityState === 'visible') {
-    if (!reloadInterval) {
-      startPolling();
-      if (wasPaused) {
-        console.log("Hot reload is resumed");  
-      }
-    }
-  } else {
-    stopPolling();
-    wasPaused = true;
-    console.log("Hot reload is paused");
-  }
-});
-
-if (document.visibilityState === 'visible') {
-  startPolling();
-}
-</script>
-"""
+hot_reload_script = "<script src='/hot-reload.js'></script>"
 
 
 def mirror_file(src_path, dest_path):
@@ -193,7 +145,7 @@ class CustomHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                     content = f.read()
 
                 if "</body>" in content:
-                    content = content.replace("</body>", f"{hot_reload_script}</body>")
+                    content = content.replace("</body>", f"</body>{hot_reload_script}")
                 else:
                     content += hot_reload_script
 
