@@ -9,8 +9,12 @@ from subprocess import run
 from threading import Thread
 
 # -- config --
-WEB_SRC_DIR = "."
-WEB_DEST_DIR = "."
+WEB_SRC_DIR = "web"
+WEB_DEST_DIR = "public"
+ASSET_SRC_DIR = "assets"
+ASSET_DEST_DIR = "public/assets"
+EXCLUDE_EXT = [".py"]
+
 ADDRESS = "127.0.0.1"
 PORT = 8000
 HOT_RELOAD = True
@@ -23,6 +27,9 @@ hot_reload_script = "<script src='/hot-reload.js'></script>"
 
 
 def mirror_file(src_path, dest_path):
+    for ext in EXCLUDE_EXT:
+        if src_path.endswith(ext):
+            return
     if os.path.exists(dest_path):
         if filecmp.cmp(src_path, dest_path, shallow=True):
             return
@@ -71,20 +78,27 @@ def get_last_modified_times(directory):
     modified_times = {}
     for root, dirs, files in os.walk(directory):
         for file in files:
+            skip = False
             file_path = os.path.join(root, file)
+            for ext in EXCLUDE_EXT:
+                if file_path.endswith(ext):
+                    skip = True
+            if skip:
+                continue
             modified_times[file_path] = os.path.getmtime(file_path)
     return modified_times
 
 
 def mirror_server_files():
     mirror_directory(WEB_SRC_DIR, WEB_DEST_DIR)
+    mirror_directory(ASSET_SRC_DIR, ASSET_DEST_DIR)
 
 
 def start_server_with_hot_reload():
     mirror_server_files()
-
     last_modified_times = {}
     last_modified_times.update(get_last_modified_times(WEB_SRC_DIR))
+    last_modified_times.update(get_last_modified_times(ASSET_SRC_DIR))
 
     update_timestamp()
     print("Hot reload is enabled")
@@ -108,7 +122,6 @@ def start_server_with_hot_reload():
             start_server_thread()
             update_timestamp()
         sleep_cmd(1)
-
 
 def update_timestamp():
     global last_modified
