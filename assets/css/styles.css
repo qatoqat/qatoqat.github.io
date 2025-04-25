@@ -63,48 +63,70 @@
 }
 
 body {
+    /*display*/
     background-color: var(--bg);
     color: var(--text);
     font-family: system-ui, -apple-system, sans-serif;
-    min-height: 100%;
+    /*positioning*/
+    width: 100%;
+    height: 100dvh;
     position: relative;
     /*flexbox*/
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
 
     #body-bg {
         z-index: -1;
         position: absolute;
         bottom: 0;
-        width: 100%;
+        width: 100vw;
+        overflow-x: hidden;
     }
 
     #main {
+        width: 100vw;
         max-width: 1024px;
+        margin: 0 auto;
         display: flex;
+        flex: 1;
         flex-direction: column;
         align-content: center;
         gap: 1em;
         padding: 0 1em;
+        opacity: 0;
+        transition: opacity 0.5s ease;
+        overflow-x: hidden;
     }
 
-    button {
-        padding: .5rem 1rem;
-        background-color: inherit;
+    footer {
         color: var(--text2);
-        border: none;
-        border-radius: .25em;
-        cursor: pointer;
-        transition: background-color .2s ease, color .2s ease;
+        padding: max(4dvh, 2em) 1em;
+        margin-top: auto;
 
-        &:hover {
-            color: var(--text);
-            background-color: var(--button-hover);
+        a {
+            color: var(--text-hl);
         }
     }
 }
 
 /*-- components --*/
+button {
+    padding: .5rem 1rem;
+    background-color: inherit;
+    color: var(--text2);
+    border: none;
+    border-radius: .25em;
+    cursor: pointer;
+    transition: background-color .2s ease, color .2s ease;
+
+    &:hover {
+        color: var(--text);
+        background-color: var(--button-hover);
+    }
+}
+
 .panel {
     display: flex;
     flex-wrap: wrap;
@@ -133,15 +155,6 @@ nav {
         font: x-large Gamepixies, sans-serif;
         text-decoration: none;
         color: var(--text);
-    }
-}
-
-footer {
-    color: var(--text2);
-    padding: max(2.5dvh, 2em) 1em;
-
-    a {
-        color: var(--text-hl);
     }
 }
 

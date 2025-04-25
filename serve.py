@@ -38,7 +38,7 @@ function startPolling() {
         window.__last_reload_ts = ts;
       })
       .catch(() => {});
-  }, 2000);
+  }, 1000);
 }
 
 function stopPolling() {
@@ -147,7 +147,7 @@ def start_server_with_hot_reload():
         current_modified_times = {}
         current_modified_times.update(get_last_modified_times(WEB_SRC_DIR))
 
-        if current_modified_times != last_modified_times:
+        if last_modified_times != current_modified_times:
             last_modified_times = current_modified_times
             print("Files have changed, restarting server ...")
             stop_server()
@@ -155,7 +155,7 @@ def start_server_with_hot_reload():
                 mirror_server_files()
             start_server_thread()
             update_timestamp()
-        sleep_cmd(2)
+        sleep_cmd(1)
 
 
 def update_timestamp():

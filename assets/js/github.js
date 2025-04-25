@@ -1,4 +1,4 @@
-export function getCommStatus() {
+function getCommStatus() {
     fetch('https://api.github.com/repos/qatoqat/qatoqat.github.io')
         .then(response => response.json())
         .then(data => {
@@ -20,3 +20,5 @@ export function getCommStatus() {
         })
         .catch(error => console.error('Error:', error))
 }
+
+getCommStatus()

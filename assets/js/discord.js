@@ -1,4 +1,4 @@
-export function updateOnlineCount() {
+function updateOnlineCount() {
 
     fetch('https://discord.com/api/v10/invites/bSDPbbdkCb?with_counts=true')
         .then(response => {
@@ -16,3 +16,5 @@ export function updateOnlineCount() {
             console.error('Error fetching data:', error);
         });
 }
+
+updateOnlineCount()
