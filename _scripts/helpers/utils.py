@@ -14,6 +14,8 @@ def get_dir_modified_times(directory):
     modified_times = {}
     for root, dirs, files in os.walk(directory):
         for file in files:
+            if file.endswith("~"):
+                continue
             file_path = os.path.join(root, file)
             modified_times[file_path] = os.path.getmtime(file_path)
     return modified_times

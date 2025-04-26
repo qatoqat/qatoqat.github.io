@@ -6,12 +6,10 @@ function loadPartials() {
                 if (t.startsWith('<!--partial-->')) {
                     let parent = p.parentNode
                     p.outerHTML = t
-                    console.log(p)
                     for (let s of parent.querySelectorAll('script.partial')) {
                         s.removeAttribute('class')
                         let src = s.src
                         if (src) {
-                            console.log(src)
                             let script = document.createElement('script')
                             script.src = src
                             document.head.appendChild(script)

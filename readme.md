@@ -8,7 +8,7 @@
 pypy _scripts/build.py
 ```
 
-- run serve.py` to serve at `127.0.0.1:8000` with hot reload enabled
+- run `serve.py` to serve at `127.0.0.1:8000` with hot reload enabled
 
 ```shell
 pypy _scripts/serve.py

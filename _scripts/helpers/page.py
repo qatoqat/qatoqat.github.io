@@ -9,7 +9,8 @@ class Page:
     base = str
     destination = str
     title = str
-    scripts = str
+    styles = list[str]
+    scripts = list[str]
     content = str
 
 
@@ -28,6 +29,8 @@ def get_page_dataclass(file_path: str) -> Page:
                             page.destination = ast.literal_eval(node.value)
                         case "title":
                             page.title = ast.literal_eval(node.value)
+                        case "styles":
+                            page.styles = ast.literal_eval(node.value)
                         case "scripts":
                             page.scripts = ast.literal_eval(node.value)
                         case "content":
@@ -95,14 +98,14 @@ def generate_html_files():
 
             for f in new:
                 page = get_page_dataclass(f)
-                generate_html(page.base, page.title, page.content, page.scripts, page.destination)
+                generate_html(page.base, page.title, page.content, page.styles, page.scripts, page.destination)
             # update lock
             lock_file.seek(0)
             lock_file.write(str(new_lock))
             lock_file.truncate()
 
 
-def generate_html(base, title, content, scripts, destination):
+def generate_html(base, title, content, styles, scripts, destination):
     with open(base) as base_file:
         dest_path = Path(destination)
         dest_path.parent.mkdir(parents=True, exist_ok=True)
@@ -112,7 +115,13 @@ def generate_html(base, title, content, scripts, destination):
                 .replace("{{ title }}", title + " - " if title else "", 1)
                 .replace("{{ content }}", content, 1)
                 .replace(
+                    "{{ styles }}",
+                    "".join([f'<link rel="stylesheet" href="{href}"/>' for href in styles]) if styles else "",
+                    1
+                )
+                .replace(
                     "{{ scripts }}",
-                    "".join([f'<script src="{src}"></script>' for src in scripts]) if scripts else ""
+                    "".join([f'<script src="{src}"></script>' for src in scripts]) if scripts else "",
+                    1
                 )
             )

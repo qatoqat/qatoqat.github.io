@@ -74,8 +74,9 @@ body {
     font-family: system-ui, -apple-system, sans-serif;
     /*positioning*/
     width: 100%;
-    height: 100dvh;
     position: relative;
+    min-height: 100dvh;
+    overflow-x: clip;
     /*flexbox*/
     display: flex;
     flex-direction: column;
@@ -196,34 +197,6 @@ nav {
     }
 }
 
-#banner {
-    border-radius: .25em;
-    position: relative;
-    width: 100%;
-    aspect-ratio: 3;
-    background-color: var(--bg2);
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    img {
-        position: absolute;
-        width: 100%;
-        object-fit: cover;
-    }
-
-    span {
-        color: #fff;
-        bottom: 1em;
-        left: 1em;
-        position: absolute;
-        padding: .125em .25em;
-        border-radius: .25em;
-        background-color: #00000022;
-    }
-}
-
 .card {
     border-radius: .25em;
     padding: 1em;
@@ -235,150 +208,5 @@ nav {
 
     h2 {
         color: var(--text-hl);
-    }
-}
-
-#container {
-    display: flex;
-    gap: 1em;
-    flex-wrap: wrap;
-
-    #content {
-        display: flex;
-        flex-direction: column;
-        gap: 1em;
-        flex: 1 1 calc(70% - .5em);
-    }
-
-    #sidebar {
-        padding: 1em;
-        background-color: var(--bg2);
-        flex: 1 1 calc(30% - .5em);
-        display: flex;
-        flex-direction: column;
-        gap: 1em;
-
-        .item {
-            user-select: none;
-            text-decoration: none;
-            border-radius: .25em;
-            padding: .5em;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: .25em;
-            font-size: 1.3em;
-            font-weight: bold;
-            overflow: hidden;
-
-            &:hover, :active {
-                filter: brightness(120%) contrast(120%);
-            }
-
-            img {
-                max-width: 10em;
-                max-height: 2em;
-            }
-
-            &.kofi {
-                background-color: #ff6433;
-
-                span {
-                    color: #000;
-                }
-            }
-
-            &.discord {
-                background-color: #5865f2;
-
-                span {
-                    color: #fff;
-                    display: flex;
-                    align-items: center;
-
-                    i.indicator {
-                        border-radius: 100%;
-                        width: .75em;
-                        height: .75em;
-                        background-color: #40A258;
-                        margin-right: .5em;
-
-                        &.yellow {
-                            background-color: #CC954C;
-                        }
-                        &.green {
-                            background-color: #40A258;
-                        }
-                    }
-
-                    &#online-status {
-                        font-size: .75em;
-                    }
-                }
-            }
-
-            &.commission {
-                color: #fff;
-                background-color: #0b9;
-                gap: 0;
-
-                span {
-                    &#commission-status {
-                        font-size: 1.5em;
-                        font-weight: bold;
-                    }
-                }
-            }
-        }
-
-    }
-}
-
-@media (max-width: 200px) {
-    #content,
-    #sidebar {
-        flex: 1 1 100%;
-    }
-}
-
-#links {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 1em;
-
-    a {
-        text-decoration: none;
-
-        div {
-            width: 4em;
-            height: 4em;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: var(--bg2);
-            border-radius: 100%;
-
-            i {
-                font-size: 2em;
-                color: var(--text);
-            }
-
-            img {
-                filter: var(--img-filter);
-                max-width: 2.5em;
-            }
-        }
-
-        &:hover, &:active {
-            i {
-                color: var(--text-hl);
-            }
-
-            img {
-                filter: var(--filter-hl);
-            }
-        }
     }
 }

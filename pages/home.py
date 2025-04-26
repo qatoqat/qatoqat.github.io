@@ -3,16 +3,20 @@ destination = "public/index.html"
 
 title = "Home"
 
+styles = [
+    "/assets/css/home.css",
+]
+
 scripts = [
     "/assets/js/discord.js",
     "/assets/js/github.js",
 ]
 
 content = """
-<div id="banner">
-    <img src="/assets/img/banner.png" alt="Banner art by Plidgey on ArtFight">
+<a id="banner" href="/assets/img/banner-full.png">
+    <img src="/assets/img/banner-3-1.png" alt="Banner art by Plidgey on ArtFight">
     <span>Art by Plidgey on ArtFight</span>
-</div>
+</a>
 <div id="container">
     <div id="content">
         <div class="card">
