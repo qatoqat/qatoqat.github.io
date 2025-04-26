@@ -1,17 +1,8 @@
 base = "templates/base.html"
 destination = "public/index.html"
-
 title = "Home"
-
-styles = [
-    "/assets/css/home.css",
-]
-
-scripts = [
-    "/assets/js/discord.js",
-    "/assets/js/github.js",
-]
-
+styles = ["/assets/css/home.css"]
+scripts = ["/assets/js/discord.js", "/assets/js/github.js"]
 content = """
 <a id="banner" href="/assets/img/banner-full.png">
     <img src="/assets/img/banner-3-1.png" alt="Banner art by Plidgey on ArtFight">

@@ -6,12 +6,14 @@ from pathlib import Path
 
 @dataclasses.dataclass
 class Page:
-    base = str
-    destination = str
-    title = str
-    styles = list[str]
-    scripts = list[str]
-    content = str
+    base: str
+    destination: str
+    title: str
+    styles: list[str]
+    scripts: list[str]
+    content: str
+
+    def __init__(self): pass
 
 
 def get_page_dataclass(file_path: str) -> Page:
@@ -22,34 +24,35 @@ def get_page_dataclass(file_path: str) -> Page:
             if isinstance(node, ast.Assign):
                 target = node.targets[0]
                 if isinstance(target, ast.Name):
+                    value = ast.literal_eval(node.value)
                     match target.id:
                         case "base":
-                            page.base = ast.literal_eval(node.value)
+                            page.base = value
                         case "destination":
-                            page.destination = ast.literal_eval(node.value)
+                            page.destination = value
                         case "title":
-                            page.title = ast.literal_eval(node.value)
+                            page.title = value
                         case "styles":
-                            page.styles = ast.literal_eval(node.value)
+                            page.styles = value
                         case "scripts":
-                            page.scripts = ast.literal_eval(node.value)
+                            page.scripts = value
                         case "content":
-                            page.content = ast.literal_eval(node.value)
+                            page.content = value
     return page
 
 
-def get_var_value(file_path: str, var_name: str):
+def get_destination(file_path: str) -> str:
     with open(file_path, "r") as f:
         tree = ast.parse(f.read())
-        for node in ast.walk(tree):
+        for node in tree.body:
             if isinstance(node, ast.Assign):
                 target = node.targets[0]
-                if isinstance(target, ast.Name) and target.id == var_name:
+                if isinstance(target, ast.Name) and target.id == "destination":
                     return ast.literal_eval(node.value)
-    return None
+    raise "No destination"
 
 
-def get_last_modified_times(directory):
+def new_lock_dict(directory: str) -> dict:
     modified_times = {}
     for root, dirs, files in os.walk(directory):
         for file in files:
@@ -58,12 +61,12 @@ def get_last_modified_times(directory):
                 file_path = os.path.join(root, file)
                 modified_times[file_path] = {
                     "modified_time": os.path.getmtime(file_path),
-                    "destination": get_var_value(file_path, "destination")
+                    "destination": get_destination(file_path)
                 }
     return modified_times
 
 
-def saved_lock_dict(lock_file_str):
+def saved_lock_dict(lock_file_str: str) -> dict:
     if not lock_file_str.strip():
         return {}
     try:
@@ -79,7 +82,7 @@ def generate_html_files():
     with open("pages.lock", "w+") as lock_file:
         lock_file_str = lock_file.read()
         saved_lock = saved_lock_dict(lock_file_str)
-        new_lock = get_last_modified_times("pages")
+        new_lock = new_lock_dict("pages")
         new = []
         removed = []
         for key in new_lock:
@@ -105,7 +108,7 @@ def generate_html_files():
             lock_file.truncate()
 
 
-def generate_html(base, title, content, styles, scripts, destination):
+def generate_html(base: str, title: str, content: str, styles: list[str], scripts: list[str], destination: str):
     with open(base) as base_file:
         dest_path = Path(destination)
         dest_path.parent.mkdir(parents=True, exist_ok=True)
