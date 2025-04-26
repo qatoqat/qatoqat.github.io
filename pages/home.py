@@ -4,8 +4,6 @@ destination = "public/index.html"
 title = "Home"
 
 scripts = [
-    "/assets/js/body.js",
-    "/assets/js/partials.js",
     "/assets/js/discord.js",
     "/assets/js/github.js",
 ]
