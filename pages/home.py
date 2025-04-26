@@ -1,5 +1,5 @@
 base = "templates/base.html"
-destination = "web/index.html"
+destination = "public/index.html"
 
 title = "Home"
 
@@ -47,12 +47,12 @@ content = """
         </a>
         <a class="item discord" href="https://discord.gg/bSDPbbdkCb">
             <span>Join our server on</span>
-            <img src="assets/img/discord-logo.png" alt="Discord logo">
+            <img src="/assets/img/discord-logo.png" alt="Discord logo">
             <span id="online-status"><i class="indicator yellow"></i> connecting </span>
         </a>
         <a class="item kofi" href="https://ko-fi.com/qatoqat">
             <span>Support us on</span>
-            <img src="assets/img/kofi-logo.png" alt="Ko-fi logo">
+            <img src="/assets/img/kofi-logo.png" alt="Ko-fi logo">
         </a>
     </div>
 </div>

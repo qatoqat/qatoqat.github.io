@@ -9,15 +9,16 @@ from subprocess import run
 from threading import Thread
 
 # -- config --
-WEB_SRC_DIR = "web"
-WEB_DEST_DIR = "public"
-ASSET_SRC_DIR = "assets"
-ASSET_DEST_DIR = "public/assets"
-EXCLUDE_EXT = [".py"]
+DEST_ROOT_DIR = "public"
+
+SRC_DEST_DIRS = {
+    DEST_ROOT_DIR: DEST_ROOT_DIR,
+    "assets": DEST_ROOT_DIR + "/assets",
+    "partials": DEST_ROOT_DIR + "/partials",
+}
 
 ADDRESS = "127.0.0.1"
 PORT = 8000
-HOT_RELOAD = True
 
 last_modified = str(time.time())
 server_ref: socketserver.TCPServer | None = None
@@ -27,12 +28,8 @@ hot_reload_script = "<script src='/hot-reload.js'></script>"
 
 
 def mirror_file(src_path, dest_path):
-    for ext in EXCLUDE_EXT:
-        if src_path.endswith(ext):
-            return
-    if os.path.exists(dest_path):
-        if filecmp.cmp(src_path, dest_path, shallow=True):
-            return
+    if os.path.exists(dest_path) and filecmp.cmp(src_path, dest_path, shallow=True):
+        return
     shutil.copy2(src_path, dest_path)
     print(f"Copied file: {src_path} to {dest_path}")
 
@@ -78,27 +75,26 @@ def get_last_modified_times(directory):
     modified_times = {}
     for root, dirs, files in os.walk(directory):
         for file in files:
-            skip = False
             file_path = os.path.join(root, file)
-            for ext in EXCLUDE_EXT:
-                if file_path.endswith(ext):
-                    skip = True
-            if skip:
-                continue
             modified_times[file_path] = os.path.getmtime(file_path)
     return modified_times
 
 
 def mirror_server_files():
-    mirror_directory(WEB_SRC_DIR, WEB_DEST_DIR)
-    mirror_directory(ASSET_SRC_DIR, ASSET_DEST_DIR)
+    for key, value in SRC_DEST_DIRS.items():
+        mirror_directory(key, value)
+
+
+def get_modified_times():
+    modified_times = {}
+    for key in SRC_DEST_DIRS.keys():
+        modified_times.update(get_last_modified_times(key))
+    return modified_times
 
 
 def start_server_with_hot_reload():
     mirror_server_files()
-    last_modified_times = {}
-    last_modified_times.update(get_last_modified_times(WEB_SRC_DIR))
-    last_modified_times.update(get_last_modified_times(ASSET_SRC_DIR))
+    last_modified_times = get_modified_times()
 
     update_timestamp()
     print("Hot reload is enabled")
@@ -110,18 +106,19 @@ def start_server_with_hot_reload():
             print("Server thread has not started yet. Waiting for 5 seconds ...")
             sleep_cmd(5)
             continue
-        current_modified_times = {}
-        current_modified_times.update(get_last_modified_times(WEB_SRC_DIR))
+        current_modified_times = get_modified_times()
 
         if last_modified_times != current_modified_times:
             last_modified_times = current_modified_times
             print("Files have changed, restarting server ...")
             stop_server()
-            if WEB_SRC_DIR != WEB_DEST_DIR:
-                mirror_server_files()
+            # if WEB_SRC_DIR != WEB_DEST_DIR:
+            #     mirror_server_files()
+            mirror_server_files()
             start_server_thread()
             update_timestamp()
         sleep_cmd(1)
+
 
 def update_timestamp():
     global last_modified
@@ -130,7 +127,7 @@ def update_timestamp():
 
 class CustomHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, directory=WEB_DEST_DIR, **kwargs)
+        super().__init__(*args, directory=DEST_ROOT_DIR, **kwargs)
 
     def do_GET(self):
         if self.path == "/__ping__":
