@@ -1,12 +1,12 @@
-import filecmp
 import http.server
 import mimetypes
 import os
-import shutil
 import socketserver
 import time
-from subprocess import run
 from threading import Thread
+
+from helpers.mirror import mirror_directory
+from helpers.utils import sleep_cmd, get_dir_modified_times
 
 # -- config --
 DEST_ROOT_DIR = "public"
@@ -24,71 +24,67 @@ last_modified = str(time.time())
 server_ref: socketserver.TCPServer | None = None
 
 # -- utils --
-hot_reload_script = "<script src='/hot-reload.js'></script>"
+hot_reload_script = """
+<script>
+console.log("Hot reload is enabled");
 
+let reloadInterval;
+let wasPaused = false;
 
-def mirror_file(src_path, dest_path):
-    if os.path.exists(dest_path) and filecmp.cmp(src_path, dest_path, shallow=True):
-        return
-    shutil.copy2(src_path, dest_path)
-    print(f"Copied file: {src_path} to {dest_path}")
+function startPolling() {
+    reloadInterval = setInterval(() => {
+        fetch("/__ping__")
+            .then(res => res.text())
+            .then(ts => {
+                if (window.__last_reload_ts && window.__last_reload_ts !== ts) {
+                    location.reload();
+                }
+                window.__last_reload_ts = ts;
+            })
+            .catch(() => {
+            });
+    }, 1000);
+}
 
+function stopPolling() {
+    if (reloadInterval) {
+        clearInterval(reloadInterval);
+        reloadInterval = null;
+    }
+}
 
-def mirror_directory(src, dest):
-    if not os.path.exists(src):
-        raise FileNotFoundError(f"Source directory {src} does not exist.")
+document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') {
+        if (!reloadInterval) {
+            startPolling();
+            if (wasPaused) {
+                console.log("Hot reload is resumed");
+            }
+        }
+    } else {
+        stopPolling();
+        wasPaused = true;
+        console.log("Hot reload is paused");
+    }
+});
 
-    os.makedirs(dest, exist_ok=True)
-
-    src_files = set(os.listdir(src))
-    for item in src_files:
-        src_path = f"{src}/{item}"
-        dest_path = f"{dest}/{item}"
-
-        if os.path.isdir(src_path):
-            mirror_directory(src_path, dest_path)
-        else:
-            mirror_file(src_path, dest_path)
-
-    dest_files = set(os.listdir(dest))
-    files_to_remove = dest_files - src_files
-
-    for item in files_to_remove:
-        dest_path = f"{dest}/{item}"
-        if os.path.isdir(dest_path):
-            shutil.rmtree(dest_path)
-            print(f"Removed directory: {dest_path}")
-        else:
-            os.remove(dest_path)
-            print(f"Removed file: {dest_path}")
-
-
-def sleep_cmd(seconds):
-    # if system() == "Windows":
-    #     run(f"ping 127.0.0.1 -n {seconds} > nul", shell=True)
-    # else:
-    #     run(f"sleep {seconds}", shell=True)
-    run(f"sleep {seconds}", shell=True)  # mingw sleep on windows
-
-
-def get_last_modified_times(directory):
-    modified_times = {}
-    for root, dirs, files in os.walk(directory):
-        for file in files:
-            file_path = os.path.join(root, file)
-            modified_times[file_path] = os.path.getmtime(file_path)
-    return modified_times
+if (document.visibilityState === 'visible') {
+    startPolling();
+}
+</script>
+"""
 
 
 def mirror_server_files():
     for key, value in SRC_DEST_DIRS.items():
-        mirror_directory(key, value)
+        if key != value:
+            mirror_directory(key, value)
 
 
 def get_modified_times():
     modified_times = {}
     for key in SRC_DEST_DIRS.keys():
-        modified_times.update(get_last_modified_times(key))
+        modified_times.update(get_dir_modified_times(key))
     return modified_times
 
 

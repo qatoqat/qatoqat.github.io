@@ -116,6 +116,3 @@ def generate_html(base, title, content, scripts, destination):
                     "".join([f'<script src="{src}"></script>' for src in scripts]) if scripts else ""
                 )
             )
-
-
-generate_html_files()
