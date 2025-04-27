@@ -8,6 +8,44 @@ content = """
     <img src="/assets/img/banner-3-1.png" alt="Banner art by Plidgey on ArtFight">
     <span>Art by Plidgey on ArtFight</span>
 </a>
+<div id="links">
+    <a href="https://bsky.app/profile/qatoqat.bsky.social" class="has-tooltip">
+        <div><i class="fa-brands fa-bluesky"></i></div>
+        <span class="tooltip bottom">Bluesky</span>
+    </a>
+    <a href="https://twitter.com/qatoqat" class="has-tooltip">
+        <div><i class="fa-brands fa-twitter"></i></div>
+        <span class="tooltip bottom">Twitter</span>
+    </a>
+    <a href="https://discord.gg/bSDPbbdkCb" class="has-tooltip">
+        <div><i class="fa-brands fa-discord"></i></div>
+        <span class="tooltip bottom">Discord</span>
+    </a>
+    <a href="https://www.youtube.com/channel/UCYhx1kQUT7hEPZM7RlOnsEw" class="has-tooltip">
+        <div><i class="fa-brands fa-youtube"></i></div>
+        <span class="tooltip bottom">YouTube</span>
+    </a>
+    <a href="https://ko-fi.com/qatoqat" class="has-tooltip">
+        <div><img src="/assets/img/kofi-icon.png" alt="Ko-fi icon"></div>
+        <span class="tooltip bottom">Ko-fi</span>
+    </a>
+    <a href="https://patreon.com/c/qatoqat" class="has-tooltip">
+        <div><i class="fa-brands fa-patreon"></i></div>
+        <span class="tooltip bottom">Patreon (Ko-fi preferred)</span>
+    </a>
+    <a href="https://www.pixiv.net/en/users/66979978" class="has-tooltip">
+        <div><i class="fa-brands fa-pixiv"></i></div>
+        <span class="tooltip bottom">Pixiv</span>
+    </a>
+    <a href="https://qatoqat.itch.io" class="has-tooltip">
+        <div><i class="fa-brands fa-itch-io"></i></div>
+        <span class="tooltip bottom">itch.io</span>
+    </a>
+    <a href="https://github.com/qatoqat" class="has-tooltip">
+        <div><i class="fa-brands fa-github"></i></div>
+        <span class="tooltip bottom">GitHub</span>
+    </a>
+</div>
 <div id="container">
     <div id="content">
         <div class="card">
@@ -48,43 +86,5 @@ content = """
             <img src="/assets/img/kofi-logo.png" alt="Ko-fi logo">
         </a>
     </div>
-</div>
-<div id="links">
-    <a href="https://bsky.app/profile/qatoqat.bsky.social" class="has-tooltip">
-        <div><i class="fa-brands fa-bluesky"></i></div>
-        <span class="tooltip bottom">Bluesky</span>
-    </a>
-    <a href="https://twitter.com/qatoqat" class="has-tooltip">
-        <div><i class="fa-brands fa-twitter"></i></div>
-        <span class="tooltip bottom">Twitter</span>
-    </a>
-    <a href="https://discord.gg/bSDPbbdkCb" class="has-tooltip">
-        <div><i class="fa-brands fa-discord"></i></div>
-        <span class="tooltip bottom">Discord</span>
-    </a>
-    <a href="https://www.youtube.com/channel/UCYhx1kQUT7hEPZM7RlOnsEw" class="has-tooltip">
-        <div><i class="fa-brands fa-youtube"></i></div>
-        <span class="tooltip bottom">YouTube</span>
-    </a>
-    <a href="https://ko-fi.com/qatoqat" class="has-tooltip">
-        <div><img src="/assets/img/kofi-icon.png" alt="Ko-fi icon"></div>
-        <span class="tooltip bottom">Ko-fi</span>
-    </a>
-    <a href="https://patreon.com/c/qatoqat" class="has-tooltip">
-        <div><i class="fa-brands fa-patreon"></i></div>
-        <span class="tooltip bottom">Patreon (Ko-fi preferred)</span>
-    </a>
-    <a href="https://www.pixiv.net/en/users/66979978" class="has-tooltip">
-        <div><i class="fa-brands fa-pixiv"></i></div>
-        <span class="tooltip bottom">Pixiv</span>
-    </a>
-    <a href="https://qatoqat.itch.io" class="has-tooltip">
-        <div><i class="fa-brands fa-itch-io"></i></div>
-        <span class="tooltip bottom">itch.io</span>
-    </a>
-    <a href="https://github.com/qatoqat" class="has-tooltip">
-        <div><i class="fa-brands fa-github"></i></div>
-        <span class="tooltip bottom">GitHub</span>
-    </a>
 </div>
 """

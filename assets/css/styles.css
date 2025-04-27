@@ -67,6 +67,10 @@ h1, h2, h3, h4, h5 {
     font-weight: normal;
 }
 
+ul, ol {
+    padding-left: 1em;
+}
+
 body {
     /*display*/
     background-color: var(--bg);
@@ -105,14 +109,14 @@ body {
         overflow-x: hidden;
     }
 
+    a {
+        color: var(--text-hl);
+    }
+
     footer {
         color: var(--text2);
         padding: max(4dvh, 2em) 1em;
         margin-top: auto;
-
-        a {
-            color: var(--text-hl);
-        }
     }
 }
 
