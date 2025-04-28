@@ -152,6 +152,7 @@
             }
 
             img {
+                user-select: none;
                 filter: var(--img-filter);
                 max-width: 2.5em;
             }
