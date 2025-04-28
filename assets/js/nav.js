@@ -36,7 +36,22 @@ function initColorScheme() {
             localStorage.setItem(key, dark)
         }
     }
+
     schemeButton.addEventListener('click', toggleScheme)
 }
 
+function highlightPath() {
+    let pathSplit = location.pathname.split('/')
+    console.log(pathSplit)
+    if (pathSplit.length > 1 && pathSplit[0].length < 1) {
+        let firstPath = pathSplit[1]
+        console.log(firstPath)
+        let navBtn = document.querySelector(`a[href="/${firstPath}"] > button`)
+        if (navBtn) {
+            navBtn.style.color = "var(--hl)"
+        }
+    }
+}
+
 initColorScheme()
+highlightPath()
